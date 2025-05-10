@@ -36,7 +36,7 @@ Finally, analyze your results by answering:
 ## Level 3
 ### Implementing TD($\lambda$)
 As a final challenge, implement the TD($\lambda$) algorithm in the same style as your SARSA implementation. You may choose either:
--  [Gridcore environment](https://github.com/automl/TabularTempoRL/blob/master/grid_envs.py)
+- [Gridcore environment](https://github.com/automl/TabularTempoRL/blob/master/grid_envs.py)
 - [Four Rooms environment](https://github.com/Farama-Foundation/Minigrid/blob/master/minigrid/envs/fourrooms.py)
 
 Make $n$ (the number of lookahead steps) a configurable parameter, and:

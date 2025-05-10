@@ -7,8 +7,9 @@ defaults:
 
 # Global flags
 seed: 42                             # Seed for reproducibility (env, policy, etc.)
-n_trials: ???                        # TODO: Define the number of trials to be run 
-num_episodes: ???                    # TODO: Define the number of episodes to run for each trial
+n_trials: 50                         # TODO: Define the number of trials to be run 
+num_episodes: 100                    # TODO: Define the number of episodes to run for each trial
+
 
 # Hydra output & sweeper settings
 hydra:
@@ -34,27 +35,39 @@ env:
       - [1, 1]
       - [1, 1]
       - [1, 1]
-  rewards: ???                        # Reward per cell index
-  horizon: ???                        # Max steps per episode
+  rewards: [0, 1, 1, 1, 10]           # Reward per cell index
+  horizon: 40                         # Max steps per episode
   seed: ${seed}                       # Pass same seed into the env constructor
 
 
 # TODO: instantiate the EpsilonGreedyPolicy in Hydra. Replace the ???s with your specification
 policy:
   _target_: rl_exercises.week_3.EpsilonGreedyPolicy
-  epsilon: ???                        # TODO: Initial exploration rate
+  epsilon: 0.25                       # TODO: Initial exploration rate
   seed: ${seed}                       # Seed for the policy’s internal RNG
 
 
 # TODO: instantiate the SARSA agent in Hydra. Replace the ???s with your specification
 agent:
   _target_: rl_exercises.week_3.SARSAAgent
-  alpha: ???                          # TODO: Define the inital learning rate
-  gamma: ???                          # TODO: Define the discount factor
+  alpha: 0.5                          # TODO: Define the inital learning rate
+  gamma: 1.0                         # TODO: Define the discount factor
 
 
 # TODO: Define the search space for the hyperparameters to be swept. Replace the ???s with your specification
 # see https://github.com/automl/hypersweeper/blob/main/examples/configs/search_space/sac.yaml for an example
 search_space:
   seed: ${seed}                      # Seed for the sweeper’s random number generator
-  hyperparameters: ???
+  hyperparameters:
+    agent.alpha:                        # Learning rate
+      type: uniform_float
+      lower: 0.1                     
+      upper: 1.0                     
+    agent.gamma:                        # Discount factor
+      type: uniform_float
+      lower: 0.9                      
+      upper: 1.0                    
+    policy.epsilon:                       # Exploration rate
+      type: uniform_float
+      lower: 0.1                    
+      upper: 0.5                     
